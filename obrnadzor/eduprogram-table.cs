@@ -21,7 +21,7 @@ public class Script
 		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
 
 		var log = new Log ("eduprogram-table");
-        string [] tags = {"oop", "ucheb_plan", "annot", "graf", "metod", "chislen", "perevod" };
+        string [] tags = {"oop", "ucheb_plan", "graf", "annot", "metod", "chislen", "perevod" };
         var outFile = "output.html";
         var baseDir = "/portals/0/eduprograms/{folder}/";
         var counter = 0;
@@ -57,6 +57,7 @@ public class Script
                 var praktika_count = 1;
 
                 var files = Directory.GetFiles (Directory.GetCurrentDirectory ());
+                Array.Sort (files);
 
     			foreach (string file in files)
     			{
@@ -66,18 +67,32 @@ public class Script
 
     					if ((ext == ".pdf" || ext == ".xls") && !Path.GetFileName (file).StartsWith ("__"))
     					{
+                            var fileUrl = Path.Combine  (baseDir, Path.GetFileName(file));
+
     						foreach (var tag in tags)
                             {
         						if (StartsWith (Path.GetFileName(file), tag))
         						{
-                                    template = template.Replace ("{" + tag + "}", Path.Combine  (baseDir, Path.GetFileName(file)) );
+                                    template = template.Replace ("{" + tag + "}", fileUrl);
         						}
                             }
 
                             if (StartsWith (Path.GetFileName(file), "rp_"))
                             {
                                 template = template.Replace ("{rp_praktika}",
-                                "<a href=\"" + Path.Combine  (baseDir, Path.GetFileName(file)) + "\" itemprop=\"EduPr\">" + (praktika_count++) + "</a> {rp_praktika}");
+                                "<a href=\"" + fileUrl + "\" itemprop=\"EduPr\">" + (praktika_count++) + "</a> {rp_praktika}");
+                            }
+
+                            if (StartsWith (Path.GetFileName(file), "graf_z"))
+                            {
+                                template = template.Replace ("{graf_z}",
+                                "<br /><a href=\"" + fileUrl + "\" itemprop=\"education_shedule\">+ заочники</a>");
+                            }
+
+                            if (StartsWith (Path.GetFileName(file), "ucheb_plan_z"))
+                            {
+                                template = template.Replace ("{ucheb_plan_z}",
+                                "<br /><a href=\"" + fileUrl + "\" itemprop=\"education_plan\">+ заочники</a>");
                             }
                         }
     				}
@@ -91,6 +106,8 @@ public class Script
                 template = template.Replace ("{folder}", folder);
                 template = template.Replace ("{oop_title}", oop_title);
                 template = template.Replace ("{#}", (++counter).ToString ());
+                template = template.Replace ("{graf_z}", string.Empty);
+                template = template.Replace ("{ucheb_plan_z}", string.Empty);
 
                 // clean tags
                 template = template.Replace ("{rp_praktika}", string.Empty);
