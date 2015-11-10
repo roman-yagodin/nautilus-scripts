@@ -86,13 +86,13 @@ public class Script
                             if (StartsWith (Path.GetFileName(file), "graf_z"))
                             {
                                 template = template.Replace ("{graf_z}",
-                                "<br /><a href=\"" + fileUrl + "\" itemprop=\"education_shedule\">+ заочники</a>");
+                                "<br /><a href=\"" + fileUrl + "\" itemprop=\"education_shedule\">+&nbsp;заочники</a>");
                             }
 
                             if (StartsWith (Path.GetFileName(file), "ucheb_plan_z"))
                             {
                                 template = template.Replace ("{ucheb_plan_z}",
-                                "<br /><a href=\"" + fileUrl + "\" itemprop=\"education_plan\">+ заочники</a>");
+                                "<br /><a href=\"" + fileUrl + "\" itemprop=\"education_plan\">+&nbsp;заочники</a>");
                             }
                         }
     				}
