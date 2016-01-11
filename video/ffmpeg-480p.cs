@@ -22,20 +22,20 @@ public class Script
 		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
 		var log = new Log ("ffmpeg-480p");
 
-		try 
+		try
 		{
 			var files = (NauHelper.IsNothingSelected)? Directory.GetFiles (Directory.GetCurrentDirectory ()) : NauHelper.SelectedFiles;
-				
+
 			foreach (string file in files)
 			{
-				try 
+				try
 				{
 					var ext = Path.GetExtension (file);
-					
+
 					if (ext == ".wmv" || ext == ".mpeg" || ext == ".ogv" || ext == ".mkv" || ext == ".avi" || ext == ".mp4" || ext == ".flv" || ext == ".mpg")
 					{
 						// Console.WriteLine (OutputFileName (file, ".webm", 360));
-						
+
 						EncodeToWebm (file, "2.5M", "128k", 480);
 						EncodeToMp4 (file, "2.5M", "128k", 480);
 					}
@@ -51,16 +51,16 @@ public class Script
 			log.WriteLine ("Error: " + ex.Message);
 		}
 		finally
-		{		
+		{
 			log.Close();
 		}
 	}
-	
+
 	protected string OutputFileName (string filename, string extension, int pvalue)
 	{
 		return Path.Combine (Path.GetDirectoryName (filename), Path.GetFileNameWithoutExtension (filename) +  "_" + pvalue + "p" + extension);
 	}
-	
+
 	///<summary></summary>
 	///<param name="videobitrate">Target video bitrate (1M)</param>
 	///<param name="audiobitrate">Target audio bitrate (128k)</param>
@@ -68,13 +68,12 @@ public class Script
 	protected void EncodeToWebm (string file, string videobitrate, string audiobitrate, int pvalue)
 	{
 		var ffmpegParams = string.Format ("-i \"{0}\" -c:v libvpx -b:v {2} -b:a {3} -c:a libvorbis -vf scale=-1:{4} \"{1}\"", file, OutputFileName (file, ".webm", pvalue), videobitrate, audiobitrate, pvalue);
-		Command.Run ("ffmpeg", ffmpegParams, int.MaxValue);
+		Command.Run ("ffmpeg", ffmpegParams);
 	}
-	
+
 	protected void EncodeToMp4 (string file, string videobitrate, string audiobitrate, int pvalue)
 	{
 		var ffmpegParams = string.Format ("-i \"{0}\" -c:v libx264 -preset slow -b:v {2} -b:a {3} -c:a libfdk_aac -vf scale=-1:{4} \"{1}\"", file, OutputFileName (file, ".mp4", pvalue), videobitrate, audiobitrate, pvalue);
-		Command.Run ("ffmpeg", ffmpegParams, int.MaxValue);
+		Command.Run ("ffmpeg", ffmpegParams);
 	}
 }
-
