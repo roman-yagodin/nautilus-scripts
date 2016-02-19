@@ -1,8 +1,5 @@
 #!/usr/bin/csharp
 
-// Loaded automatically from ~/.config/csharp
-// LoadAssembly("/home/redhound/Projects/Redhound.Scripting/Redhound.Scripting/bin/Release/Redhound.Scripting.dll");
-
 using System;
 using System.IO;
 using System.Diagnostics;
@@ -12,28 +9,28 @@ using R7.Scripting;
 Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
 var log = new Log("zip-for-site.log");
 
-try 
+try
 {
 	string tmpDirName = DateTimeHelper.IsoToday;
-	// some addition to path in case, when we use existing dir 
+	// some addition to path in case, when we use existing dir
 	string subTmpDirName = string.Empty;
 
 	string[] files = FileHelper.GetFiles (FileSource.NautilusSelection);
 
 	if (files.Length == 0)
 		files = Directory.GetFiles (Directory.GetCurrentDirectory (), "*", SearchOption.AllDirectories);
-	else 
+	else
 	{
 		// files = NauHelper.SelectedFiles;
 
-		if (files.Length == 1 && FileHelper.IsDirectory (files[0])) // && DateTimeHelper.IsIsoDate (Path.GetFileName (files[0]))) 
+		if (files.Length == 1 && FileHelper.IsDirectory (files[0])) // && DateTimeHelper.IsIsoDate (Path.GetFileName (files[0])))
 		{
 			tmpDirName = Path.GetFileName (files[0]);
 			subTmpDirName = tmpDirName;
 		}
-		
+
 		// TODO: must be all files and files in dirs
-		
+
 
 		List<string> combined = new List<string> (files.Length * 2);
 		combined.AddRange (files);
@@ -62,11 +59,11 @@ try
 
 
 
-	
+
    string zipFile = Path.Combine (Directory.GetCurrentDirectory (), zipFileName);
 
 	   Console.WriteLine (Directory.GetCurrentDirectory ());
-	   foreach (string file in files) 
+	   foreach (string file in files)
    {
 		   // skipping directories (they will be recreated) and [old] zip archive
 		   if (!FileHelper.IsDirectory (file))
@@ -88,7 +85,7 @@ try
 		   }
 	   }
 
-   // deleting old archive after copy 
+   // deleting old archive after copy
 	   if (File.Exists (zipFile))
    {
 		   File.Delete (zipFile);
@@ -97,7 +94,7 @@ try
 
    //zip -r -0 -UN=UTF8 "${SOURCE_FILE}.zip" "${SOURCE_FILE}"
 
-   // usual result is "/tmp"	
+   // usual result is "/tmp"
 	   Directory.SetCurrentDirectory (Path.Combine (tmp, subTmpDirName));
 
    Console.WriteLine ("Starting zip...");
