@@ -47,9 +47,21 @@ public class Script
                     // backup files, overwrite existing
                     File.Copy (file, Path.Combine (backupDirectory, Path.GetFileName (file)), true);
 
-                    // run unoconv
-                    Command.Run ("unoconv", string.Format ("-f pdf \"{0}\"", file));
-				}
+                    var tryCount = 2;
+                    var result = 0;
+                    while (tryCount > 0) {
+                        // run unoconv
+                        result = Command.Run ("unoconv", string.Format ("-f pdf \"{0}\"", file));
+                        if (result == 0) {
+                            break;
+                        }
+                        tryCount--;
+                    }
+
+                    if (result != 0) {
+                        throw new Exception (string.Format ("Cannot convert \"{0}\" file.", file));
+                    }
+                }
 				catch (Exception ex)
 				{
 					log.WriteLine ("Error: " + ex.Message);
