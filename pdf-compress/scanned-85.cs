@@ -4,16 +4,19 @@ using System;
 using System.IO;
 using R7.Scripting;
 
-public static class Program {
-    public static int Main (string [] args) {
+public static class Program
+{
+    public static int Main (string [] args)
+    {
         new CompressScannedPdfScript ().Run ();
         return 0;
     }
 }
 
-public class CompressScannedPdfScript {
+public class CompressScannedPdfScript
 {
-	public void Run () {
+	public void Run ()
+    {
 		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
         Directory.CreateDirectory ("~backup");
         var log = new Log ("scanned-85");
