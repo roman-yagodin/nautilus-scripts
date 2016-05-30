@@ -42,11 +42,8 @@ try
 
 					var backup = "./~compress-pdf/" + Path.GetFileName(file);
 
-					if (File.Exists(backup))
-						File.Delete(backup);
-
-					File.Copy (file, backup);
-					File.Delete(file);
+					File.Copy (file, backup, true);
+					File.Delete (file);
 					File.Move (outfile, file);
 				}
 				else

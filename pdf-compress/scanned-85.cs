@@ -34,12 +34,9 @@ public class CompressScannedPdfScript
         				if (new FileInfo (file).Length > new FileInfo (outFile).Length) {
         					// compression succeded, the compressed file size is less than original file size
         					var backupFile = Path.Combine ("~backup", Path.GetFileName (file));
-        					if (File.Exists (backupFile)) {
-        						File.Delete (backupFile);
-                            }
-
+        					
                             // backup original file
-        					File.Copy (file, backupFile);
+        					File.Copy (file, backupFile, true);
         					File.Delete (file);
 
                             // substitute original file
