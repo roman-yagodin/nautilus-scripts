@@ -8,12 +8,13 @@ All C# scripts require *Mono Framework* installed. Most of them use Mono C# Shel
 
 ## Script-specific dependencies
 
-- `pdf-combine/`, `pdf-compress/` require `gs` from *GhostScript*
-- `image-*/`, `pdf-to/` require `convert` from *ImageMagick*
-- `convert/` require `unoconv` from *LibreOffice* / *OpenOffice*
-- `video/` require `ffmpeg`
-- `compare/` require `meld`
+- `pdf-combine/`, `pdf-compress/` require `gs` utility from *GhostScript*
+- `image-*/`, `pdf-to/` require `convert` utility from *ImageMagick*
+- `convert/` require `unoconv` utility from *LibreOffice* / *OpenOffice*
+- `video/` require `ffmpeg` utility from *FFMpeg*
+- `compare/` require `meld` application from *Meld*
+-  `zip/` require `7z` utility from *7Zip*
 
 ## License
 
-All scripts code licensed under GNU GPL v3 or any later version.
+All scripts are published under the terms of the GNU General Public License, either version 3 of the License, or (at your option) any later version.
