@@ -10,12 +10,10 @@ var compLevel = "/default";
 var outfilePrefix = "combined_";
 
 Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
-var log = new Log("combine-pdf.log");
+var log = new Log ("combine-pdf");
 
 try
 {
-	Directory.CreateDirectory("~backup");
-
    var filenames = string.Empty;
    var files = FileHelper.GetFiles(FileSource.Nautilus);
    var filteredFiles = new List<string> ();
@@ -47,13 +45,13 @@ try
 
 		// backup combined files
 		foreach (var file in filteredFiles) {
-			File.Copy (file, Path.Combine ("~backup", Path.GetFileName (file)), true);
+            FileHelper.Backup (file, "~backup", BackupType.Numbered);
 			File.Delete (file);
 		}
    }
    else
    {
-      log.WriteLine("Info: Not enougth PDF/PS files to combine");
+      log.WriteLine ("Info: Not enougth PDF/PS files to combine");
    }
 }
 catch (Exception ex)

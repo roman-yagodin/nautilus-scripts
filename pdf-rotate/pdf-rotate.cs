@@ -32,7 +32,6 @@ public class PdfRotateScript
 	public void Run (string rotation)
 	{
 		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
-		Directory.CreateDirectory ("~backup");
 		var log = new Log ("pdf-rotate");
 
 		try {
@@ -42,10 +41,8 @@ public class PdfRotateScript
 						Command.Run ("pdftk", string.Format ("\"{0}\" rotate 1-end{1} output \"{0}.rotated\"", file, rotation));
 
 						if (File.Exists (file + ".rotated")) {
-							var backupFile = Path.Combine ("~backup", Path.GetFileName (file));
-							File.Copy (file, backupFile, true);
-							File.Copy (file + ".rotated", file, true);
-							File.Delete (file + ".rotated");
+							FileHelper.Backup (file, "~backup");
+							FileHelper.Move (file + ".rotated", file, true);
 						}
 					}
 				}

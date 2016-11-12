@@ -26,15 +26,10 @@ public class Script
 	{
 		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
 		var log = new Log (ScriptName);
-        var backupDirectory = "./~backup";
-
+        
 		try
 		{
 			var files = (NauHelper.IsNothingSelected)? Directory.GetFiles (Directory.GetCurrentDirectory ()) : NauHelper.SelectedFiles;
-
-            if (files.Length > 0) {
-                Directory.CreateDirectory (backupDirectory);
-            }
 
 			foreach (string file in files)
 			{
@@ -44,8 +39,8 @@ public class Script
 
 					if (ext == ".jpg" || ext == ".jpeg")
 					{
-                        // backup files, overwrite existing
-                        File.Copy (file, Path.Combine (backupDirectory, Path.GetFileName (file)), true);
+                         // backup original files
+                        FileHelper.Backup (file, "~backup", BackupType.Numbered);
 
                         // run convert
                         Command.Run ("convert", string.Format (

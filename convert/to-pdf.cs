@@ -26,15 +26,10 @@ public class Script
 	{
 		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
 		var log = new Log (ScriptName);
-        var backupDirectory = "./~backup";
-
+        
 		try
 		{
 			var files = (NauHelper.IsNothingSelected)? Directory.GetFiles (Directory.GetCurrentDirectory ()) : NauHelper.SelectedFiles;
-
-            if (files.Length > 0) {
-                Directory.CreateDirectory (backupDirectory);
-            }
 
 			foreach (string file in files)
 			{
@@ -44,15 +39,14 @@ public class Script
 
                     // TODO: Filter by extension (list may be very large)
 
-                    // backup files, overwrite existing
-                    File.Copy (file, Path.Combine (backupDirectory, Path.GetFileName (file)), true);
-
                     var tryCount = 2;
                     var result = 0;
                     while (tryCount > 0) {
                         // run unoconv
                         result = Command.Run ("unoconv", string.Format ("-f pdf \"{0}\"", file));
                         if (result == 0) {
+                            FileHelper.Backup (file, "~backup", BackupType.Numbered);
+                            File.Delete (file);
                             break;
                         }
                         tryCount--;

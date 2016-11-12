@@ -18,8 +18,7 @@ public class CompressScannedPdfScript
 	public void Run ()
     {
 		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
-        Directory.CreateDirectory ("~backup");
-        var log = new Log ("scanned-85");
+        var log = new Log ("scanned-75");
 
 		try {
 			foreach (var file in FileHelper.GetFiles (FileSource.Nautilus)) {
@@ -33,14 +32,8 @@ public class CompressScannedPdfScript
 
         				if (new FileInfo (file).Length > new FileInfo (outFile).Length) {
         					// compression succeded, the compressed file size is less than original file size
-        					var backupFile = Path.Combine ("~backup", Path.GetFileName (file));
-        					
-                            // backup original file
-        					File.Copy (file, backupFile, true);
-        					File.Delete (file);
-
-                            // substitute original file
-        					File.Move (outFile, file);
+        					FileHelper.Backup (file, "~backup", BackupType.Numbered);
+        					FileHelper.Move (outFile, file, true);
         				}
         				else {
         					// compression failed, size of the compressed file is greater or equal than original

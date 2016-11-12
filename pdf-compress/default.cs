@@ -5,9 +5,7 @@ using System.IO;
 using R7.Scripting;
 
 Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
-Directory.CreateDirectory("~compress-pdf");
-
-var log = new Log("compress-pdf.log");
+var log = new Log ("compress-pdf");
 
 try
 {
@@ -35,14 +33,9 @@ try
 
 				if (fi1.Length > fi2.Length)
 				{
-					// compression succeded, compressed file size
-					// less than original file size
-
-					var backup = "./~compress-pdf/" + Path.GetFileName(file);
-
-					File.Copy (file, backup, true);
-					File.Delete(file);
-					File.Move (outfile, file);
+					// compression succeded, compressed file size is less than original file size
+					FileHelper.Backup (file, "~backup", BackupType.Numbered);
+        			FileHelper.Move (outFile, file, true);
 				}
 				else
 				{

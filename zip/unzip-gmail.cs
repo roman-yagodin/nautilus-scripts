@@ -18,8 +18,7 @@ public class UnzipGmailScript
 
         var log = new Log ("unzip-gmail");
 		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
-        Directory.CreateDirectory ("~backup");
-
+        
         try {
             var files = NauHelper.SelectedFiles;
 			foreach (string file in files) {
@@ -43,10 +42,12 @@ public class UnzipGmailScript
 	}
 
     protected void UnzipGmail (string file) {
-        // tell to 7Zip to use
+        // invoke 7-Zip
         Environment.SetEnvironmentVariable ("LANG", "C");
         Command.Run ("7z", string.Format ("x \"{0}\"", file));
-        // move zip archive to ~backup
-        File.Move (file, Path.Combine ("~backup", Path.GetFileName (file)));
+
+        // backup original zip archive
+        FileHelper.Backup (file, "~backup");
+        File.Delete (file);
     }
 }

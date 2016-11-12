@@ -18,8 +18,7 @@ public class FixDoubeExtScript
 
         var log = new Log ("fix-double-ext");
         Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
-        Directory.CreateDirectory ("~backup");
-
+        
         try {
             var files = NauHelper.SelectedFiles;
             foreach (string file in files) {
