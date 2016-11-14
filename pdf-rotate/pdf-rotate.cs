@@ -31,7 +31,7 @@ public class PdfRotateScript
 {
 	public void Run (string rotation)
 	{
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 		var log = new Log ("pdf-rotate");
 
 		try {

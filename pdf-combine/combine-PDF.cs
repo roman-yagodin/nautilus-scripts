@@ -9,7 +9,7 @@ var compLevel = "/default";
 // other: /default, /screen (lowest), /ebook, /printer, /prepress (highest)
 var outfilePrefix = "combined_";
 
-Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 var log = new Log ("combine-pdf");
 
 try
@@ -33,7 +33,7 @@ try
    if (pdfFiles > 0)
    {
       // extract pdfmarks from first file
-      Command.Run (Path.Combine (NauHelper.ScriptDirectory, "common", "compress-PDF-pdfmarks.sh"), "\"" + files[0] + "\"");
+      Command.Run (Path.Combine (Nautilus.ScriptDirectory, "common", "compress-PDF-pdfmarks.sh"), "\"" + files[0] + "\"");
 
       // make combined pdf
       var outfile = outfilePrefix + Path.GetFileName(files[0]);

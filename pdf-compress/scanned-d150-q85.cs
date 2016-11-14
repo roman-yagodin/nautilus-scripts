@@ -17,7 +17,7 @@ public class CompressScannedPdfScript
 {
 	public void Run ()
     {
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
         var log = new Log ("scanned-85");
 
 		try {

@@ -9,16 +9,16 @@ try
     // FOP need such a density set to all raster pictures
 	string density = "96";
 		
-	//Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+	//Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 	
 	string [] files;
 	
 	// Script may be started from Nautilus
-	if (NauHelper.FromNau)
+	if (Nautilus.FromNau)
 	{
 		
-		if (NauHelper.IsSomethingSelected)
-			files = NauHelper.SelectedFiles;
+		if (Nautilus.IsSomethingSelected)
+			files = Nautilus.SelectedFiles;
 		else
 			files = Directory.GetFiles (Directory.GetCurrentDirectory());
 	}

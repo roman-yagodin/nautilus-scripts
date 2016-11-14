@@ -99,7 +99,7 @@ if (!Env.IsEmpty("R7_SCRIPTING_FORK"))
       Environment.SetEnvironmentVariable("F2SVG_FONT_SANS", XFONT_SANS);
       Environment.SetEnvironmentVariable("F2SVG_FONT_SERIF", XFONT_SERIF);
 
-      Command.Run (NauHelper.ScriptDirectory + "/publican/f2svg.cs");
+      Command.Run (Nautilus.ScriptDirectory + "/publican/f2svg.cs");
 
 	   Directory.SetCurrentDirectory(BOOK_PATH);
 
@@ -122,7 +122,7 @@ if (!Env.IsEmpty("R7_SCRIPTING_FORK"))
             //   chapter, HOME + "/.gnome2/nautilus-scripts/publican/set_condition.xslt"));
 
    	      Command.Run("xsltproc", string.Format("--output \"{0}t\" --xinclude --novalid \"{1}\" \"{0}\"",
-   	          chapter, NauHelper.ScriptDirectory + "/publican/xslt/slides.xslt"));
+   	          chapter, Nautilus.ScriptDirectory + "/publican/xslt/slides.xslt"));
 
    	      File.Delete (chapter);
      	    File.Move (chapter+"t", chapter);
@@ -234,6 +234,6 @@ if (!Env.IsEmpty("R7_SCRIPTING_FORK"))
 else
 {
    Env.Set ("R7_SCRIPTING_FORK","1");
-   Command.RunNoWait("x-terminal-emulator", string.Format("-e {0}/publican/Build-book-and-brand-new.cs", NauHelper.ScriptDirectory));
+   Command.RunNoWait("x-terminal-emulator", string.Format("-e {0}/publican/Build-book-and-brand-new.cs", Nautilus.ScriptDirectory));
 }
 quit;

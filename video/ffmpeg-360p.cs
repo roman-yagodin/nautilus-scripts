@@ -19,12 +19,12 @@ public class Script
 {
 	public void Run ()
 	{
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 		var log = new Log ("ffmpeg-360p");
 
 		try
 		{
-			var files = (NauHelper.IsNothingSelected)? Directory.GetFiles (Directory.GetCurrentDirectory ()) : NauHelper.SelectedFiles;
+			var files = (Nautilus.IsNothingSelected)? Directory.GetFiles (Directory.GetCurrentDirectory ()) : Nautilus.SelectedFiles;
 
 			foreach (string file in files)
 			{

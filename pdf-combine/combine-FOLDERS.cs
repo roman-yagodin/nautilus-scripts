@@ -12,8 +12,8 @@ try
    var compLevel = "/screen";
    // other: /default, /screen (lowest), /ebook, /printer, /prepress (highest)
 
-   Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
-   var scriptDirectory = NauHelper.ScriptDirectory;
+   Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
+   var scriptDirectory = Nautilus.ScriptDirectory;
 
    // For testing:
    // Directory.SetCurrentDirectory("/media/Data/Сайт/На сайт/140709 1112 Приемная/09-07-2014");

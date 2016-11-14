@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using R7.Scripting;
 
-Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 var log = new Log ("compress-pdf");
 
 try
@@ -24,7 +24,7 @@ try
 				Console.WriteLine (outfile);
 
 				// make pdfmarks file
-				Command.Run (Path.Combine (NauHelper.ScriptDirectory, "common", "compress-PDF-pdfmarks.sh"),
+				Command.Run (Path.Combine (Nautilus.ScriptDirectory, "common", "compress-PDF-pdfmarks.sh"),
 					"\"" + file + "\"");
 
 				Command.Run("gs", string.Format("-sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS={0} -dNOPAUSE -dQUIET -dBATCH "+

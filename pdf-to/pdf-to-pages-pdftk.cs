@@ -17,7 +17,7 @@ public class Script
 {
 	public void Run ()
 	{
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 		var log = new Log ("pdf-to-pages-pdftk");
 
 		try

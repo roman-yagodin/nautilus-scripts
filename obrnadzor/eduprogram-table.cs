@@ -18,7 +18,7 @@ public class Script
 {
 	public void Run (string workingDir)
 	{
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 
 		var log = new Log ("eduprogram-table");
         string [] tags = {"oop", "ucheb_plan", "graf", "annot", "metod", "chislen", "perevod" };
@@ -35,7 +35,7 @@ public class Script
             fs = new FileStream (outFile, FileMode.Create);
             sw = new StreamWriter (fs);
 
-            var directories = (NauHelper.IsNothingSelected)? Directory.GetDirectories (Directory.GetCurrentDirectory ()) : NauHelper.SelectedFiles;
+            var directories = (Nautilus.IsNothingSelected)? Directory.GetDirectories (Directory.GetCurrentDirectory ()) : Nautilus.SelectedFiles;
 
             Array.Sort (directories);
 

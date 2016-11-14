@@ -17,10 +17,10 @@ public class UnzipGmailScript
 	public void Run () {
 
         var log = new Log ("unzip-gmail");
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
         
         try {
-            var files = NauHelper.SelectedFiles;
+            var files = Nautilus.SelectedFiles;
 			foreach (string file in files) {
 				try {
                     var ext = Path.GetExtension (file).ToLowerInvariant ();

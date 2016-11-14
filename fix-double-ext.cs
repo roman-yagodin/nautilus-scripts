@@ -17,10 +17,10 @@ public class FixDoubeExtScript
     public void Run () {
 
         var log = new Log ("fix-double-ext");
-        Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+        Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
         
         try {
-            var files = NauHelper.SelectedFiles;
+            var files = Nautilus.SelectedFiles;
             foreach (string file in files) {
                 try {
                     var ext1 = Path.GetExtension (file);

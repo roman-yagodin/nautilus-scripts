@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using R7.Scripting;
 
-Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 var log = new Log("pdf-to-images.log");
 
 try 

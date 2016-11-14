@@ -84,7 +84,7 @@ if (!Env.IsEmpty("R7_SCRIPTING_FORK"))
       Environment.SetEnvironmentVariable("F2SVG_FONT_SANS", XFONT_SANS);
       Environment.SetEnvironmentVariable("F2SVG_FONT_SERIF", XFONT_SERIF);
 
-      Command.Run (NauHelper.ScriptDirectory + "/publican/f2svg.cs");
+      Command.Run (Nautilus.ScriptDirectory + "/publican/f2svg.cs");
 
 	   Directory.SetCurrentDirectory(BOOK_PATH);
 
@@ -215,6 +215,6 @@ if (!Env.IsEmpty("R7_SCRIPTING_FORK"))
 else
 {
    Env.Set ("R7_SCRIPTING_FORK","1");
-   Command.RunNoWait("x-terminal-emulator", string.Format("-e {0}/publican/Build-book-and-brand.cs", NauHelper.ScriptDirectory));
+   Command.RunNoWait("x-terminal-emulator", string.Format("-e {0}/publican/Build-book-and-brand.cs", Nautilus.ScriptDirectory));
 }
 quit;

@@ -44,12 +44,12 @@ try
 	// RUN TYPE 2 - from Nautilus
 	if (!filesReady)
 	{
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 	
-		if (NauHelper.IsNothingSelected)
+		if (Nautilus.IsNothingSelected)
 			files = Directory.GetFiles (Directory.GetCurrentDirectory ());
 		else
-			files = NauHelper.SelectedFiles;
+			files = Nautilus.SelectedFiles;
 	}
 	
 	Console.WriteLine ("Converting MML or ODF formulas to SVG with jeuclid-cli...");

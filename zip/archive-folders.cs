@@ -17,11 +17,11 @@ public class Script
 	public void Run () {
 
         var log = new Log ("archive-folders");
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 
         try {
 
-            var directories = NauHelper.SelectedFiles;
+            var directories = Nautilus.SelectedFiles;
 			foreach (string directory in directories) {
 				try {
 					if (FileHelper.IsDirectory (directory)) {

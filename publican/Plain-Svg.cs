@@ -9,12 +9,12 @@ try
 {
 	string[] files = null;
 	        	
-	Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+	Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 
-	if (NauHelper.IsNothingSelected)
+	if (Nautilus.IsNothingSelected)
 		files = Directory.GetFiles (Directory.GetCurrentDirectory ());
 	else
-		files = NauHelper.SelectedFiles;
+		files = Nautilus.SelectedFiles;
 	
 	if (files.Length <= 0)
 	{

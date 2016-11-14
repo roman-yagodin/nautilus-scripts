@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using R7.Scripting;
 
-Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 var log = new Log("zip-for-site.log");
 
 try
@@ -21,7 +21,7 @@ try
 		files = Directory.GetFiles (Directory.GetCurrentDirectory (), "*", SearchOption.AllDirectories);
 	else
 	{
-		// files = NauHelper.SelectedFiles;
+		// files = Nautilus.SelectedFiles;
 
 		if (files.Length == 1 && FileHelper.IsDirectory (files[0])) // && DateTimeHelper.IsIsoDate (Path.GetFileName (files[0])))
 		{

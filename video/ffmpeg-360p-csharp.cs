@@ -15,13 +15,13 @@ public class Script
 
 	public void Run ()
 	{
-		Console.WriteLine (NauHelper.CurrentDirectory);
-		Directory.SetCurrentDirectory (NauHelper.CurrentDirectory);
+		Console.WriteLine (Nautilus.CurrentDirectory);
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
 		var log = new Log (ScriptName);
 
 		try
 		{
-			var files = (NauHelper.IsNothingSelected)? Directory.GetFiles (Directory.GetCurrentDirectory ()) : NauHelper.SelectedFiles;
+			var files = (Nautilus.IsNothingSelected)? Directory.GetFiles (Directory.GetCurrentDirectory ()) : Nautilus.SelectedFiles;
 
 			foreach (string file in files)
 			{
