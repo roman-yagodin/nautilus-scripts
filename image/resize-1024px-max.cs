@@ -8,61 +8,23 @@ public static class Program
 {
     public static int Main (string [] args)
     {
-        new Script (args [0]).Run ();
-        return 0;
+        var maxSize = 1024;
+
+        var script = new FileScript (args, (file) => {
+            FileHelper.Backup (file, "~backup", BackupType.Numbered);
+            return Command.Run ("convert", string.Format (
+                "\"{0}\" -auto-orient -interpolate filter -filter lanczos " +
+                "-resize {2}x{2}> -quality 92 -sampling-factor 1:1:1 " +
+                "-interlace Line +repage \"{1}\"", file, file, maxSize)
+            );
+        });
+
+        script.Files = FileHelper.GetFiles (FileSource.Nautilus);
+        script.AllowedExtensions.Add (".jpg");
+        script.AllowedExtensions.Add (".jpeg");
+
+        var result = script.Run ();        
+
+        return result;
     }
-}
-
-public class Script
-{
-    public string ScriptName { get; protected set; }
-
-    public Script (string scriptName)
-    {
-        ScriptName = Path.GetFileNameWithoutExtension (scriptName);
-    }
-
-	public void Run ()
-	{
-		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
-		var log = new Log (ScriptName);
-        
-		try
-		{
-			var files = (Nautilus.IsNothingSelected)? Directory.GetFiles (Directory.GetCurrentDirectory ()) : Nautilus.SelectedFiles;
-
-			foreach (string file in files)
-			{
-				try
-				{
-					var ext = Path.GetExtension (file).ToLowerInvariant ();
-
-					if (ext == ".jpg" || ext == ".jpeg")
-					{
-                        // backup original files
-                        FileHelper.Backup (file, "~backup", BackupType.Numbered);
-
-                        // run convert
-                        Command.Run ("convert", string.Format (
-                            "\"{0}\" -auto-orient -interpolate filter -filter lanczos " +
-                            "-resize {2} -quality 92 -sampling-factor 1:1:1 " +
-                            "-interlace Line +repage \"{1}\"", file, file, "1024x1024>")
-                        );
-					}
-				}
-				catch (Exception ex)
-				{
-					log.WriteLine ("Error: " + ex.Message);
-				}
-			}
-		}
-		catch (Exception ex)
-		{
-			log.WriteLine ("Error: " + ex.Message);
-		}
-		finally
-		{
-			log.Close();
-		}
-	}
 }
