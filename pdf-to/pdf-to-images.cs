@@ -15,7 +15,7 @@ try
 		{
 			var baseFileName = Path.GetFileNameWithoutExtension (fileName);
 
-			Command.Run ("convert", string.Format ("-density 100 -quality 92 " +
+			Command.Run ("convert", string.Format ("-density 96 -quality 92 " +
 				"\"{0}\" \"{1}\"_%03d.jpg", fileName, baseFileName));
 		}
 		catch (Exception ex)
