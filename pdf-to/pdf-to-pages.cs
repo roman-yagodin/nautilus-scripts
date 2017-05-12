@@ -1,33 +1,46 @@
-#!/usr/bin/csharp
+#!/usr/bin/csexec -r:R7.Scripting.dll
 
 using System;
 using System.IO;
 using R7.Scripting;
 
-Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
-var log = new Log("pdf-to-images.log");
-
-try 
+public static class Program
 {
-	foreach (var fileName in FileHelper.GetFiles (FileSource.Nautilus))
-	{
-		try 
-		{
-			var baseFileName = Path.GetFileNameWithoutExtension (fileName);
+    public static int Main (string [] args)
+    {
+        new Script ().Run ();
+        return 0;
+    }
+}
 
-			Command.Run ("convert", string.Format ("-density 100 -quality 92 " +
-				"\"{0}\" \"{1}\"_%03d.pdf", fileName, baseFileName));
+public class Script
+{
+	public void Run ()
+	{
+		Directory.SetCurrentDirectory (Nautilus.CurrentDirectory);
+		var log = new Log ("pdf-to-pages-pdftk");
+
+		try
+		{
+			foreach (var fileName in FileHelper.GetFiles (FileSource.Nautilus))
+			{
+				try
+				{
+					Command.Run ("pdftk", string.Format ("\"{0}\" burst", fileName));
+				}
+				catch (Exception ex)
+				{
+					log.WriteLine ("Error: " + ex.Message);
+				}
+			}
 		}
 		catch (Exception ex)
 		{
 			log.WriteLine ("Error: " + ex.Message);
 		}
+		finally
+		{
+			log.Close();
+		}
 	}
 }
-catch (Exception ex)
-{
-	log.WriteLine ("Error: " + ex.Message);
-}
-
-log.Close();
-quit;
