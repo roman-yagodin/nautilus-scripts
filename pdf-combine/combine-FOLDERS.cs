@@ -43,12 +43,12 @@ try
       if (pdfFiles > 0)
       {
          // extract pdfmarks from first file
-         Command.Run (Path.Combine (scriptDirectory, "common", "compress-PDF-pdfmarks.sh"), "\"" + files[0] + "\"");
+         // Command.Run (Path.Combine (scriptDirectory, "common", "compress-PDF-pdfmarks.sh"), "\"" + files[0] + "\"");
          
          // make combined pdf
     
          Command.Run("gs", string.Format("-sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS={0} -dNOPAUSE -dQUIET -dBATCH "+
-			                                      "-sOutputFile=\"{1}\" {2} .pdfmarks ", compLevel, outfile, filenames));
+			                                      "-sOutputFile=\"{1}\" {2} ", compLevel, outfile, filenames));
          
          // remove pdfmarks file  
 	      File.Delete (".pdfmarks");
