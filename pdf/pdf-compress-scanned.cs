@@ -11,16 +11,19 @@ public static class Program
 {
     public static int Main (string [] args)
     {
-		Console.Write ("Enter image DPI (e.g. 72-51200): (hit [Enter] for \"96\") ");
+		Console.WriteLine ("!!! ONE-PAGE PDFs ONLY !!!");
 		Console.WriteLine ();
 
+		Console.Write ("Enter image DPI (e.g. 72-51200): (hit [Enter] for \"96\") ");
+		
 		int density;
 		if (!int.TryParse (Console.ReadLine (), out density)) {
 			density = 100;
 		}
-		
-		Console.Write ("Enter JPEG quality (0-100)): (hit [Enter] for \"75\") ");
 		Console.WriteLine ();
+
+		Console.Write ("Enter JPEG quality (0-100)): (hit [Enter] for \"75\") ");
+		
 		
 		int quality;
 		if (!int.TryParse (Console.ReadLine (), out quality)) {
@@ -32,6 +35,7 @@ public static class Program
 		else if (quality > 100) {
 			quality = 100;
 		}
+		Console.WriteLine ();
 
         var script = new PdfCompressScannedScript (args);
 		script.Density = density;
@@ -68,7 +72,7 @@ public class PdfCompressScannedScript: FileScriptBase
 		var outFile = file + ".compressed";
 		
 		var result = Command.Run ("convert",
-			$"-density {Density}x{Density} -quality {Quality} -compress jpeg \"{file}\" \"{outFile}\""
+			$"\"{file}\" -density {Density}x{Density} -quality {Quality} -compress jpeg \"{outFile}\""
 		);
 
 		if (result == 0) {
