@@ -9,28 +9,45 @@ public static class Program
     public static int Main (string [] args)
     {
         var script = new FileScript (args, (file) => {
-            var tryCount = 2;
             var result = 0;
+            
+            var outFile = Path.Combine (
+				Path.GetDirectoryName (file),
+				Path.GetFileNameWithoutExtension (file) + ".pdf"
+			);
 
-            while (tryCount > 0) {
-                // run unoconv
-                result = Command.Run ("unoconv", string.Format ("-f pdf \"{0}\"", file));
-                if (result == 0) {
-                    FileHelper.Backup (file, "~backup", BackupType.Numbered);
-                    File.Delete (file);
-                    break;
-                }
-                tryCount--;
+            var ext = Path.GetExtension (file);
+            if (ext == ".jpg" || ext == ".jpeg"
+             || ext == ".png" || ext == ".bmp"
+             || ext == ".tif" || ext == ".tiff"
+             || ext == ".gif" || ext == ".pdf" || ext == ".ps")
+            {
+                // run imagemagick
+                result = Command.Run ("convert", $"\"{file}\" \"{outFile}\"");
             }
-
-            if (result != 0) {
+            else {
+                // run unoconv
+                var tryCount = 2;
+                while (tryCount > 0) {
+                    result = Command.Run ("unoconv", $"-f pdf \"{file}\"");
+                    if (result == 0) {
+                        break;
+                    }
+                    tryCount--;
+                }
+            }
+            
+            if (result == 0) {
+                FileHelper.Backup (file, "~backup", BackupType.Numbered);
+                File.Delete (file);
+            }
+            else {
                 throw new Exception (string.Format ("Cannot convert \"{0}\" file.", file));
             }
 
             return result;
         });
 
-        // TODO: Filter by extension (list may be very large)
         script.Files = FileHelper.GetFiles (FileSource.Nautilus);
 
         var scriptResult = script.Run ();
