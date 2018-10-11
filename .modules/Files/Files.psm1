@@ -42,8 +42,7 @@ function Get-FilteredFiles
         [string]$Extensions
     )
     process {
-        $Path = [System.IO.Path];
-        if (($Extensions.ToLowerInvariant() -split ";") -contains $Path::GetExtension($File.FullName).ToLowerInvariant()) {
+        if (($Extensions.ToLowerInvariant() -split ";") -contains (Split-Path -Path $File.FullName -Extension).ToLowerInvariant()) {
             Write-Output -InputObject $File
         }
     }
