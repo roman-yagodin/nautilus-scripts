@@ -16,7 +16,7 @@ function Backup-File
         $Path = [System.IO.Path]
         if (Test-Path -Path $File.FullName) {
             if (!(Test-Path -Path $BackupDir -PathType Container)) {
-                New-Item -Path $BackupDir -ItemType Directory -Force 
+                New-Item -Path $BackupDir -ItemType Directory -Force | Out-Null
             }
             $backupDirAbs = $Path::Combine($Path::GetDirectoryName($File.FullName), $BackupDir);
             $backupNumber = 0;
