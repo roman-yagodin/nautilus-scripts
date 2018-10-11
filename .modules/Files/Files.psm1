@@ -31,7 +31,7 @@ function Backup-File
     }
 }
 
-function Select-FilesByExt
+function Get-FilteredFiles
 {
     [CmdletBinding()]
     param (
