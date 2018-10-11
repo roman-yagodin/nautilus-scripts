@@ -14,9 +14,9 @@ function Backup-File
     )
     process {
         $Path = [System.IO.Path]
-        if (Test-Path -Path "$($File.FullName)") {
-            if (!(Test-Path -Path "$BackupDir" -PathType Container)) {
-                New-Item -Path "$BackupDir" -ItemType Directory -Force 
+        if (Test-Path -Path $File.FullName) {
+            if (!(Test-Path -Path $BackupDir -PathType Container)) {
+                New-Item -Path $BackupDir -ItemType Directory -Force 
             }
             $backupDirAbs = $Path::Combine($Path::GetDirectoryName($File.FullName), $BackupDir);
             $backupNumber = 0;
@@ -24,8 +24,8 @@ function Backup-File
                 if ($backupNumber -gt 0) { $backupSuffix = ".~$backupNumber~" } else { $backupSuffix = ".~" }
                 $backupFileName = $Path::Combine($backupDirAbs, "$($File.Name)$backupSuffix")
                 $backupNumber++;
-            } while (Test-Path -Path "$backupFileName")
-            Copy-Item $File -Destination "$backupFileName"
+            } while (Test-Path -Path $backupFileName)
+            Copy-Item $File -Destination $backupFileName
             Write-Verbose "$($File.Name) was backed up";
         }
     }

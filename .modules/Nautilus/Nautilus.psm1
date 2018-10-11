@@ -6,9 +6,9 @@ function Get-NautilusSelectedFiles
     param ()
     process {
         $brand = Get-NautilusBrand
-        $selectedFiles = $(NautilusEnv $brand "SELECTED_FILE_PATHS") -split "\r?\n" | where { $_.length -gt 0 }
+        $selectedFiles = (NautilusEnv $brand "SELECTED_FILE_PATHS") -split "\r?\n" | where { $_.length -gt 0 }
         foreach ($file in $selectedFiles) {
-            Get-Item -Path "$file" -Force | Write-Output
+            Get-Item -Path $file -Force | Write-Output
         }
     }
 }
@@ -20,7 +20,7 @@ function Get-NautilusBrand
     process {
         $brands = @("NAUTILUS", "NEMO", "CAJA")
         foreach ($brand in $brands) {
-            if ($(NautilusEnv $brand "CURRENT_URI").Length -gt 0) {
+            if ((NautilusEnv $brand "CURRENT_URI").Length -gt 0) {
                 Write-Output $brand
             }
         }

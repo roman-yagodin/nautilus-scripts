@@ -16,10 +16,10 @@ function Invoke-PdfRotate {
         $outFile = $_.FullName + ".rotated"
         pdftk @("""$inFile""", "rotate",  "1-end$Rotation", "output", """$outFile""")
         
-        if (Test-Path -Path "$outFile") {
+        if (Test-Path -Path $outFile) {
             Import-Module "$PSScriptRoot/../Files/Files.psm1"
             Backup-File $_ "~backup"
-            Move-Item -Path "$outFile" -Destination "$inFile" -Force
+            Move-Item -Path $outFile -Destination $inFile -Force
             Write-Verbose "$($_.Name) rotated";
         }
         else {
