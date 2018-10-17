@@ -31,6 +31,37 @@ function Backup-File
     }
 }
 
+function Restore-File
+{
+    [CmdletBinding()]
+    param (
+        # TODO: Add Path parameter
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+        [System.IO.FileInfo]$File,
+        
+        [Parameter(Mandatory=$true)]
+        [ValidateScript({Test-Path -Path $_ -PathType Container})]
+        [string]$BackupDir
+    )
+    process {
+        $backupFiles = Get-ChildItem -Path $BackupDir -Filter "*~" -File |
+            Where-Object { $_.Name.StartsWith($File.Name) }
+        
+        $numOfBackupFiles = ($backupFiles | Measure-Object).Count    
+        if ($numOfBackupFiles -gt 0) {
+            $lastBackupFile = $backupFiles[0]
+            Move-Item -Path $lastBackupFile.FullName -Destination $File.FullName -Force
+        }
+        else {
+            Write-Warning "No backups found for the ""$($File.Name)"" file."
+        }
+        
+        for ($i = 1; $i -lt $numOfBackupFiles; $i++) {
+            Move-Item -Path $backupFiles[$i].FullName -Destination $backupFiles[$i-1].FullName -Force
+        }    
+    }
+}
+
 function Get-FilteredFiles
 {
     [CmdletBinding()]
