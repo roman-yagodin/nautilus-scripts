@@ -13,7 +13,7 @@ if ($Rotation.Length -eq 0) {
     $Rotation = "right"
 }
 
-Get-NautilusSelectedFiles | Get-FilteredFiles -Extensions ".pdf" | Invoke-PdfRotate -Rotation $Rotation
+Get-NautilusSelectedFiles | Get-FilteredFiles -Extension ".pdf" | Invoke-PdfRotate -Rotation $Rotation
 
 if ($Env:PWSHX_IN_TERMINAL -eq "true") {
     Read-Host -Prompt "Press [Enter] to continue"

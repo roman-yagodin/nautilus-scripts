@@ -70,10 +70,10 @@ function Get-FilteredFiles
         [System.IO.FileInfo]$File,
 
         [Parameter(Mandatory=$true)]
-        [string]$Extensions
+        [string[]]$Extension
     )
     process {
-        if (($Extensions.ToLowerInvariant() -split ";") -contains (Split-Path -Path $File.FullName -Extension).ToLowerInvariant()) {
+        if ($Extension -contains (Split-Path -Path $File.FullName -Extension).ToLowerInvariant()) {
             Write-Output -InputObject $File
         }
     }
