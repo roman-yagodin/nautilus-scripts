@@ -23,7 +23,31 @@ function Invoke-PdfRotate {
             Write-Verbose "$($_.Name) rotated";
         }
         else {
-            Write-Warning "$($_.Name) rotation failed";
+            Write-Warning "$($_.Name) rotation failed!";
+        }
+    }
+}
+
+function Invoke-PdfFix {
+    [CmdletBinding()]
+    param (
+        # TODO: Add Path parameter
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [System.IO.FileInfo]$PdfFile
+    )
+    process {
+        $inFile = $_.FullName
+        $outFile = $_.FullName + ".fixed"
+        pdftk @("""$inFile""", "output", """$outFile""")
+        
+        if (Test-Path -Path $outFile) {
+            Import-Module "$PSScriptRoot/../Files/Files.psm1"
+            Backup-File $_ "~backup"
+            Move-Item -Path $outFile -Destination $inFile -Force
+            Write-Verbose "$($_.Name) fixed";
+        }
+        else {
+            Write-Warning "$($_.Name) fixup failed!";
         }
     }
 }
