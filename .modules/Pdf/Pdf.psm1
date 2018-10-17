@@ -7,13 +7,21 @@ function Invoke-PdfRotate {
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
         [System.IO.FileInfo]$PdfFile,
 
-        [Parameter(Mandatory=$true)]
-        [ValidateSet("right","left","down","north","east","west")]
+        [Parameter(
+            Mandatory=$true,
+            HelpMessage="Possible page rotation values (in degrees): north (0), east (90), south (180), west (270), left (-90), right (+90), down (+180)"
+        )]
+        [AllowEmptyString()]
+        [ValidateSet("","right","left","down","north","east","west")]
         [string]$Rotation
     )
+    begin {
+        if ($Rotation.Length -eq 0) { $Rotation = "right" }
+    }
     process {
         $inFile = $_.FullName
         $outFile = $_.FullName + ".rotated"
+
         pdftk @("""$inFile""", "rotate",  "1-end$Rotation", "output", """$outFile""")
         
         if (Test-Path -Path $outFile) {
