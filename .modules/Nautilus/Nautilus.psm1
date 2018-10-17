@@ -5,13 +5,23 @@ function Get-NautilusSelectedFiles
     [CmdletBinding()]
     param ()
     process {
+        Get-NautilusSelectedItems | Where-Object { $_ -is [System.IO.FileInfo] }
+    }
+}
+
+function Get-NautilusSelectedItems
+{
+    [CmdletBinding()]
+    param ()
+    process {
         $brand = Get-NautilusBrand
-        $selectedFiles = (NautilusEnv $brand "SELECTED_FILE_PATHS") -split "\r?\n" | where { $_.length -gt 0 }
+        $selectedFiles = (NautilusEnv $brand "SELECTED_FILE_PATHS") -split "\r?\n" | Where-Object { $_.length -gt 0 }
         foreach ($file in $selectedFiles) {
             Get-Item -Path $file -Force | Write-Output
         }
     }
 }
+
 
 function Get-NautilusBrand
 {
