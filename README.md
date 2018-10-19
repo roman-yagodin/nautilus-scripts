@@ -11,12 +11,12 @@ which designed to run in a terminal window, also require [pwshx](https://github.
 
 ## Major dependencies
 
-- `pdf-compress/` require *GhostScript*
-- `pdf-combine/`, `pdf-fix/`, `pdf-rotate/` require *PDFTK*
-- `image-*/`, `pdf-to/` require *ImageMagick*
-- `convert/` require *Unoconv* from *LibreOffice* / *OpenOffice* 
-- `video/` require *FFMpeg*
-- `compare/` require *Meld*
+- `pdf-compress` require *GhostScript*
+- `pdf-combine`, `pdf-fix`, `pdf-rotate` require *PDFTK*
+- `image-*`, `pdf-to` require *ImageMagick*
+- `convert` require *Unoconv* from *LibreOffice* / *OpenOffice* 
+- `video` require *FFMpeg*
+- `compare` require *Meld*
 
 ## License
 
