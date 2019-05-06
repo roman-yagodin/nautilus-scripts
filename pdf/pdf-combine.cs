@@ -12,14 +12,15 @@ public static class Program
 {
     public static int Main (string [] args)
     {
-		var script = new PdfCombineScript (args);
-		script.Files = FileHelper.GetFiles (FileSource.Nautilus);
-		
-		var result = script.Run2 ();
+			var script = new PdfCombineScript (args);
+			script.Files = FileHelper.GetFiles (FileSource.NautilusSelection);
+			
+			var result = 0;
+			if (script.Files.Length >= 2) {
+				result = script.Run2 ();
+			}
 
-		Console.ReadLine ();
-
-		return result;
+			return result;
     }
 }
 
