@@ -39,7 +39,7 @@ public static class Program
 
         var script = new PdfCompressScannedScript (args);
 		script.Density = density;
-		script.Files = FileHelper.GetFiles (FileSource.Nautilus);
+		script.Files = FileHelper.GetFiles (FileSource.NautilusSelection);
 		var scriptResult = script.Run ();
 
 		Console.WriteLine ();

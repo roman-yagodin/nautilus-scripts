@@ -9,7 +9,7 @@ var log = new Log("translit-lowercase.log");
 
 try 
 {
-	foreach (var file in FileHelper.GetFiles (FileSource.Nautilus))
+	foreach (var file in FileHelper.GetFiles (FileSource.NautilusSelection))
 	{
 		try 
 		{

@@ -7,7 +7,7 @@ using R7.Scripting;
 
 try 
 {
-	var files = FileHelper.GetFiles (FileSource.Nautilus);
+	var files = FileHelper.GetFiles (FileSource.NautilusSelection);
 	
 	if (files.Length != 2)	
 		throw new Exception("You must select exactly 2 files");

@@ -32,7 +32,7 @@ public static class Program
 
 
         // TODO: Filter by extension (list may be very large)
-        script.Files = FileHelper.GetFiles (FileSource.Nautilus);
+        script.Files = FileHelper.GetFiles (FileSource.NautilusSelection);
 
         var scriptResult = script.Run ();
         return scriptResult;

@@ -30,7 +30,7 @@ public static class Program
 
         var script = new PdfCompressScript (args);
 		script.CompLevel = compLevel;
-		script.Files = FileHelper.GetFiles (FileSource.Nautilus);
+		script.Files = FileHelper.GetFiles (FileSource.NautilusSelection);
 		var scriptResult = script.Run ();
 
 		Console.WriteLine ();

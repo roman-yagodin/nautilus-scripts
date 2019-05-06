@@ -19,7 +19,7 @@ public static class Program
             );
         });
 
-        script.Files = FileHelper.GetFiles (FileSource.Nautilus);
+        script.Files = FileHelper.GetFiles (FileSource.NautilusSelection);
         script.AllowedExtensions.Add (".jpg");
         script.AllowedExtensions.Add (".jpeg");
 

@@ -48,7 +48,7 @@ public static class Program
             return result;
         });
 
-        script.Files = FileHelper.GetFiles (FileSource.Nautilus);
+        script.Files = FileHelper.GetFiles (FileSource.NautilusSelection);
 
         var scriptResult = script.Run ();
         return scriptResult;

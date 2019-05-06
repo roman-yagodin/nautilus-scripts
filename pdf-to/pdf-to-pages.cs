@@ -22,7 +22,7 @@ public class Script
 
 		try
 		{
-			foreach (var fileName in FileHelper.GetFiles (FileSource.Nautilus))
+			foreach (var fileName in FileHelper.GetFiles (FileSource.NautilusSelection))
 			{
 				try
 				{
