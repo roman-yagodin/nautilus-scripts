@@ -1,6 +1,5 @@
 #!/usr/bin/pwsh
 
-# TODO: Add Restore-File cmdlet
 function Backup-File
 {
     [CmdletBinding()]
@@ -28,6 +27,7 @@ function Backup-File
             Copy-Item $File -Destination $backupFileName
             Write-Verbose "$($File.Name) was backed up";
         }
+        Write-Output -InputObject $File
     }
 }
 
@@ -62,6 +62,12 @@ function Restore-File
     }
 }
 
+function IsExtensionMatch
+{
+    param ([System.IO.FileInfo]$File, [string[]]$Extension)
+    return $Extension -contains (Split-Path -Path $File.FullName -Extension).ToLowerInvariant()
+}
+
 function Get-FilteredFiles
 {
     [CmdletBinding()]
@@ -73,7 +79,21 @@ function Get-FilteredFiles
         [string[]]$Extension
     )
     process {
-        if ($Extension -contains (Split-Path -Path $File.FullName -Extension).ToLowerInvariant()) {
+        if (IsExtensionMatch -File $File -Extension $Extension) {
+            Write-Output -InputObject $File
+        }
+    }
+}
+
+function Get-FilteredImages
+{
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+        [System.IO.FileInfo]$File
+    )
+    process {
+        if (IsExtensionMatch -File $File -Extension @(".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".gif")) {
             Write-Output -InputObject $File
         }
     }
