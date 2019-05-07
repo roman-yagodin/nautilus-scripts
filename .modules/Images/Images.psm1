@@ -4,21 +4,21 @@ function Resize-Image
 {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory, ValueFromPipeline=$true)]
+        [Parameter(Mandatory, ValueFromPipeline)]
         [System.IO.FileInfo]$File,
 
-        [Parameter(Mandatory, HelpMessage="Image size or resize geometry: http://www.imagemagick.org/Usage/resize/")]
+        [Parameter(Mandatory, HelpMessage="Image size or resize geometry: https://imagemagick.org/script/command-line-options.php#resize")]
         [AllowEmptyString()]
         [string]$ResizeGeometry,
 
-        [Parameter(Mandatory, HelpMessage="JPEG quality")]
-        [System.Nullable[int]]$Quality
+        [Parameter(HelpMessage="JPEG compression level (1-100): https://imagemagick.org/script/command-line-options.php#quality")]
+        [ValidateRange(1,100)] 
+        [int]$Quality = 92
     )
     begin {
         if ($ResizeGeometry.Length -eq 0) { $ResizeGeometry = "1280" }
         if ($ResizeGeometry -Match "\d+") { $ResizeGeometry = "$($ResizeGeometry)x$($ResizeGeometry)>" }
-        if (-not $Quality.HasValue) { $Quality = 90 }
-
+    
         Write-Verbose "Resizing images using $ResizeGeometry geometry and $Quality% quality."
     }
     process {
