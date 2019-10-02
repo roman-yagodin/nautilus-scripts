@@ -12,7 +12,7 @@ function Invoke-PdfRotate {
             HelpMessage="Possible page rotation values (in degrees): north (0), east (90), south (180), west (270), left (-90), right (+90), down (+180)"
         )]
         [AllowEmptyString()]
-        [ValidateSet("","right","left","down","north","east","west")]
+        [ValidateSet("", "north", "east", "south", "west", "left", "right", "down")]
         [string]$Rotation
     )
     begin {
