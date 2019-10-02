@@ -53,9 +53,10 @@ function Invoke-PdfFix {
         
         if (Test-Path -Path $outFile) {
             Import-Module "$PSScriptRoot/../Files/Files.psm1"
-            Backup-File $_ "~backup"
+            Backup-File $_ "~backup" | Out-Null
             Move-Item -Path $outFile -Destination $inFile -Force
-            Write-Verbose "$($_.Name) fixed";
+            
+            Get-Item $inFile | Write-Output
         }
         else {
             Write-Warning "$($_.Name) fixup failed!";
