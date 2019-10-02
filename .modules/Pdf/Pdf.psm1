@@ -17,6 +17,8 @@ function Invoke-PdfRotate {
     )
     begin {
         if ($Rotation.Length -eq 0) { $Rotation = "right" }
+
+        Write-Host "Rotating PDFs using ""$Rotation"" rotation." 
     }
     process {
         $inFile = $_.FullName
@@ -26,9 +28,10 @@ function Invoke-PdfRotate {
         
         if (Test-Path -Path $outFile) {
             Import-Module "$PSScriptRoot/../Files/Files.psm1"
-            Backup-File $_ "~backup"
+            Backup-File $_ "~backup" | Out-Null
             Move-Item -Path $outFile -Destination $inFile -Force
-            Write-Verbose "$($_.Name) rotated";
+                       
+            Get-Item $inFile | Write-Output
         }
         else {
             Write-Warning "$($_.Name) rotation failed!";

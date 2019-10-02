@@ -19,7 +19,7 @@ function Resize-Image
         if ($ResizeGeometry.Length -eq 0) { $ResizeGeometry = "1280" }
         if ($ResizeGeometry -Match "\d+") { $ResizeGeometry = "$($ResizeGeometry)x$($ResizeGeometry)>" }
     
-        Write-Verbose "Resizing images using $ResizeGeometry geometry and $Quality% quality."
+        Write-Host "Resizing images using $ResizeGeometry geometry and $Quality% quality."
     }
     process {
         $inFile = $_.FullName
@@ -29,5 +29,7 @@ function Resize-Image
                         "-interlace Line", "+repage", """$outFile""")
 
         Start-Process -FilePath "convert" -ArgumentList $convertArgs -Wait
+
+        Get-Item $outFile | Write-Output
     }
 }
