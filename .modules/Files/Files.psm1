@@ -142,4 +142,33 @@ function Rename-FileSimplify
     }
 }
 
+function Rename-FileReplace
+{
+    # TODO: Allow to replace also in extension
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [System.IO.FileInfo] $File,
+        [Parameter(Mandatory=$true, HelpMessage="Match pattern")]
+        [string] $Match,
+        [Parameter(Mandatory=$true, HelpMessage="Replacement string")]
+        [AllowEmptyString()]
+        [string] $Replacement
+    )
+    begin {
+        Write-Host "Renaming files by replacing ""$Match"" pattern with ""$Replacement""."
+    }
+    process {
+        $newName = "$($_.BaseName -replace $Match, $Replacement)$($_.Extension)"
+
+        if ($_.Name -ne $newName) {
+            Rename-Item $_ -NewName $newName
+            Get-Item $newName | Write-Output
+        }
+        else {
+            Write-Verbose "No match found in $($_.Name)"
+        }
+    }
+}
+
 Export-ModuleMember -Cmdlet * -Function *

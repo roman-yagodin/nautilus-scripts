@@ -1,10 +1,6 @@
-#!/usr/bin/pwshx -t
+#!/usr/bin/pwsh
 
 Import-Module "$PSScriptRoot/.modules/Nautilus/Nautilus.psm1"
+Import-Module "$PSScriptRoot/.modules/Files/Files.psm1"
 
-$match = Read-Host -Prompt "Match pattern"
-$replacement = Read-Host -Prompt "Replacement string"
-
-Get-NautilusSelectedFiles | ForEach-Object -Process {
-    Rename-Item $_ -NewName "$($_.BaseName -Replace $match, $replacement)$($_.Extension)"
-}
+Get-NautilusSelectedFiles | Rename-FileReplace
