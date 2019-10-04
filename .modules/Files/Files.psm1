@@ -171,4 +171,29 @@ function Rename-FileReplace
     }
 }
 
+function Rename-FileSequentally
+{
+    # TODO: Calculate number of files
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [System.IO.FileInfo] $File,
+        [Parameter(Mandatory=$true, HelpMessage="Filename prefix")]
+        [string] $Prefix,
+        [Parameter(Mandatory=$true, HelpMessage="Number of decimal digits")]
+        [int] $NumOfDigits
+    )
+    begin {
+        Write-Host "Renaming files sequentally using ""$Prefix"" as prefix."
+        $index = 1
+    }
+    process {
+        $newName = "$($Prefix)_$($index.ToString().PadLeft($NumOfDigits,'0'))$($_.Extension)"
+        $index++
+
+        Rename-Item $_ -NewName $newName
+        Get-Item $newName | Write-Output
+    }
+}
+
 Export-ModuleMember -Cmdlet * -Function *

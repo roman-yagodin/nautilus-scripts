@@ -1,16 +1,13 @@
 #!/usr/bin/pwshx -t
 
 Import-Module "$PSScriptRoot/.modules/Nautilus/Nautilus.psm1"
-
-$Prefix = Read-Host -Prompt "Enter filename prefix"
+Import-Module "$PSScriptRoot/.modules/Files/Files.psm1"
 
 $selectedFiles = Get-NautilusSelectedFiles
-
 $filesCount = ($selectedFiles | Measure-Object).Count
 $numOfDigits = [System.Math]::Floor([System.Math]::Log($filesCount,10) + 1)
+$selectedFiles | Rename-FileSequentally -NumOfDigits $numOfDigits
 
-$index = 1
-$selectedFiles | ForEach-Object -Process {
-    Rename-Item $_ -NewName "$($Prefix)_$($index.ToString().PadLeft($numOfDigits,'0'))$(Split-Path -Path $_ -Extension)"
-    $index++
+if ($Env:PWSHX_IN_TERMINAL -eq "true") {
+    Read-Host -Prompt "Press [Enter] to continue"
 }
