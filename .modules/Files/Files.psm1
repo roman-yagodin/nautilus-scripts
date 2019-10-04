@@ -1,5 +1,7 @@
 #!/usr/bin/pwsh
 
+Import-Module "$PSScriptRoot/../Unidecode/Unidecode.psm1"
+
 function Backup-File
 {
     [CmdletBinding()]
@@ -98,3 +100,46 @@ function Get-FilteredImages
         }
     }
 }
+
+
+function Format-FilenameToAlpha {
+    param ([string] $filename)
+
+    $filename = $filename -replace "[^0-9a-zA-Z-_\.]", "_"
+    $filename = $filename -replace "-_", "_"
+    $filename = $filename -replace "_-", "_"
+    $filename = $filename -replace "_+", "_"
+    $filename = $filename -replace "-+", "-"
+    $filename = $filename -replace "\.+", "."
+    $filename = $filename -replace "^\.", "" 
+    $filename = $filename -replace "\.$", ""
+    
+    return $filename;
+}
+
+function Format-FileExtensionToAlpha {
+    param ([string] $fileExt)
+    
+    $fileExt = $fileExt -replace "^\.", ""
+
+    return "." + $(Format-FilenameToAlpha $fileExt);
+}
+
+function Rename-FileSimplify
+{
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+        [System.IO.FileInfo] $File
+        # TODO: Allow to apply unidecode, simplify and tolower independently
+    )
+    process {
+        $newName = "$(Format-FilenameToAlpha ($Unidecoder::Unidecode((PreUnidecodeCyrillic $_.BaseName))))$(Format-FileExtensionToAlpha $_.Extension)".ToLowerInvariant()
+        if ($newName -ne $_.Name) {
+            Rename-Item $_ -NewName $newName 
+            Get-Item $newName | Write-Output
+        }
+    }
+}
+
+Export-ModuleMember -Cmdlet * -Function *

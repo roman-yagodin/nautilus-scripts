@@ -1,2 +1,5 @@
 # Ignore experimental stuff
 __*
+
+.nuget/*
+!.nuget/*.ps1
