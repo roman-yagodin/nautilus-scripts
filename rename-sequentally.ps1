@@ -1,8 +1,10 @@
 #!/usr/bin/pwshx -t
 
-Import-Module "$PSScriptRoot/.modules/Nautilus/Nautilus.psm1"
-Import-Module "$PSScriptRoot/.modules/Files/Files.psm1"
-Import-Module "$PSScriptRoot/.modules/Pwshx/Pwshx.psm1"
+[Environment]::SetEnvironmentVariable("PSModulePath", $Env:PSModulePath + [System.IO.Path]::PathSeparator + "$PSScriptRoot/.modules")
+
+Import-Module -Name Nautilus
+Import-Module -Name Files
+Import-Module -Name Pwshx
 
 $selectedFiles = Get-NautilusSelectedFiles
 $filesCount = ($selectedFiles | Measure-Object).Count

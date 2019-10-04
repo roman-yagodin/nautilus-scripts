@@ -1,7 +1,9 @@
 #!/usr/bin/pwsh
 
-Import-Module "$PSScriptRoot/../.modules/Nautilus/Nautilus.psm1"
-Import-Module "$PSScriptRoot/../.modules/Files/Files.psm1"
-Import-Module "$PSScriptRoot/../.modules/Pdf/Pdf.psm1"
+[Environment]::SetEnvironmentVariable("PSModulePath", $Env:PSModulePath + [System.IO.Path]::PathSeparator + "$PSScriptRoot/../.modules")
+
+Import-Module -Name Nautilus
+Import-Module -Name Files
+Import-Module -Name Pdf
 
 Get-NautilusSelectedFiles | Get-FilteredFiles -Extension ".pdf" | Invoke-PdfFix
