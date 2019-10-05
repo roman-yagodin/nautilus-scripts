@@ -135,10 +135,10 @@ function Rename-FileSimplify
     )
     process {
         $newName = "$(Format-FilenameToAlpha ($Unidecoder::Unidecode((PreUnidecodeCyrillic $_.BaseName))))$(Format-FileExtensionToAlpha $_.Extension)".ToLowerInvariant()
-        if ($newName -ne $_.Name) {
+        if ($newName -cne $_.Name) {
             Rename-Item $_ -NewName $newName 
-            Get-Item $newName | Write-Output
         }
+        Get-Item $newName | Write-Output
     }
 }
 
@@ -161,13 +161,13 @@ function Rename-FileReplace
     process {
         $newName = "$($_.BaseName -replace $Match, $Replacement)$($_.Extension)"
 
-        if ($_.Name -ne $newName) {
+        if ($_.Name -cne $newName) {
             Rename-Item $_ -NewName $newName
-            Get-Item $newName | Write-Output
         }
         else {
             Write-Verbose "No match found in $($_.Name)"
         }
+        Get-Item $newName | Write-Output
     }
 }
 
