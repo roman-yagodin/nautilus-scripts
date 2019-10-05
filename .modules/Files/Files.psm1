@@ -125,7 +125,7 @@ function Format-FileExtensionToAlpha {
     return "." + $(Format-FilenameToAlpha $fileExt);
 }
 
-function Rename-FileSimplify
+function Rename-FileNormalize
 {
     [CmdletBinding()]
     param (

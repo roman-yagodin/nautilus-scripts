@@ -5,4 +5,4 @@
 Import-Module -Name Nautilus
 Import-Module -Name Files
 
-Get-NautilusSelectedFiles | Rename-FileSimplify
+Get-NautilusSelectedFiles | Rename-FileNormalize
