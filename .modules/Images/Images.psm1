@@ -13,7 +13,7 @@ function Resize-Image
 
         [Parameter(HelpMessage="JPEG compression level (1-100): https://imagemagick.org/script/command-line-options.php#quality")]
         [ValidateRange(1,100)] 
-        [int]$Quality = 92
+        [int]$Quality = 90
     )
     begin {
         if ($ResizeGeometry.Length -eq 0) { $ResizeGeometry = "1280" }
