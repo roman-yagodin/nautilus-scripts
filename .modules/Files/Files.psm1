@@ -171,6 +171,28 @@ function Rename-FileReplace
     }
 }
 
+function Rename-FilePrefix
+{
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [System.IO.FileInfo] $File,
+        [Parameter(Mandatory=$true, HelpMessage="Filename Prefix")]
+        [string] $Prefix
+    )
+    begin {
+        Write-Host "Renaming files by adding ""$($Prefix + "_")"" prefix."
+    }
+    process {
+        $newName = "$($Prefix + "_" + $_.BaseName)$($_.Extension)"
+
+        if ($_.Name -cne $newName) {
+            Rename-Item $_ -NewName $newName
+        }
+        Get-Item $newName | Write-Output
+    }
+}
+
 function Rename-FileSequentally
 {
     # TODO: Calculate number of files
