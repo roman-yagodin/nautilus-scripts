@@ -63,3 +63,48 @@ function Invoke-PdfFix {
         }
     }
 }
+
+function Compress-Pdf {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [System.IO.FileInfo]$PdfFile,
+
+        [Parameter(
+            Mandatory=$true,
+            HelpMessage="Possible compression levels: default, screen (low-res), ebook (medium-res), printer, prepress (high-res)"
+        )]
+        [AllowEmptyString()]
+        [ValidateSet("", "default", "screen", "ebook", "printer", "prepress")]
+        [string]$CompressionLevel
+    )
+    begin {
+        if ($CompressionLevel.Length -eq 0) { $CompressionLevel = "default" }
+
+        Write-Host "Compressing PDFs with Ghostscript using ""$CompressionLevel"" compression." 
+    }
+    process {
+        $inFile = $_.FullName
+        $outFile = $_.FullName + ".compressed"
+
+        ghostscript @("-sDEVICE=pdfwrite", "-dCompatibilityLevel=1.4", "-dPDFSETTINGS=/$CompressionLevel",
+            "-dNOPAUSE", "-dQUIET", "-dBATCH", "-sOutputFile=""$outFile""", """$inFile""") 
+
+        if (!(Test-Path -Path $outFile)) {
+            Write-Warning "$($_.Name) compression failed!";
+            exit
+        }
+
+        $inFileLength = (Get-Item $inFile).length
+        $outFileLength = (Get-Item $outFile).length
+
+        if ($outFileLength -lt $inFileLength) {
+            Move-Item -Path $outFile -Destination $inFile -Force
+            Get-Item $inFile | Write-Output
+        }
+        else {
+            Remove-Item -Path $outFile
+            Write-Verbose "$($_.Name) is not compressed.";
+        }
+    }
+}
